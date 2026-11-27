@@ -4,6 +4,8 @@ Salida: /home/claude/preview/index.html + /home/claude/preview/site.json
 El mismo renderizador servirá para el sitio estático definitivo (modo 'static').
 """
 import json, re, html, os, sys, urllib.parse
+sys.path.insert(0, '/home/claude/site')
+import extras as X
 
 ROOT = '/home/claude'
 MODE = sys.argv[1] if len(sys.argv) > 1 else 'spa'
@@ -300,9 +302,65 @@ def page_about():
             'y participa en organizaciones de la sociedad civil como ANCLA.</p>'
             '<p>Escribe «Las Reglas del Juego», la columna que publica El Reporte desde octubre de 2025. Su tesis es '
             'constante: lo que decide el rumbo de un país no son las personas, sino las instituciones. Escribe desde el '
-            'liberalismo clásico, con Hayek y Popper como referencias.</p></div>'
+            'liberalismo clásico, con Hayek y Popper como referencias.</p>'
+            '<h2>Documentos y enlaces</h2><ul>'
+            + ''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for u, t in X.CV)
+            + f'<li><a href="{link("entrevistas")}">Entrevistas y videos</a>, incluidos Perú 2021 y la Fundación Perú</li>'
+            + f'<li><a href="{link("fotos")}">Fotos</a></li>'
+            + f'<li><a href="{link("archivo")}">Archivo</a>: declaración pública y resolución de archivamiento</li></ul>'
+            '<p>Contacto: <a href="mailto:manuel@sotomayor.com">manuel@sotomayor.com</a></p></div>'
             f'<div class="btns" style="margin:8px 0 56px"><a class="btn solid" style="background:var(--fill);color:#fff" '
             f'href="{link("columnas")}">Leer las columnas</a></div></div>')
+
+def vid_card(v):
+    vid, title, det, t, anchor = v
+    ida = f' id="{anchor}"' if anchor else ''
+    start = f' data-t="{t}"' if t else ''
+    return (f'<div class="vid"{ida}><a class="yt" href="{X.YT}{vid}" data-id="{vid}"{start} aria-label="Ver: {esc(title)}">'
+            f'<img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></a>'
+            f'<h3>{esc(title)}</h3>' + (f'<p class="lbl">{esc(det)}</p>' if det else '') + '</div>')
+
+def link_list(items):
+    return '<ul class="links">' + ''.join(
+        f'<li><a href="{esc(u)}">{esc(t)}</a><span class="lbl">{esc(d)}</span></li>' for u, t, d in items) + '</ul>'
+
+def page_entrevistas():
+    V = X.VIDEOS
+    return ('<div class="wrap"><header class="page-head"><h1>Entrevistas</h1>'
+            '<p>Entrevistas en televisión y prensa, una conferencia y los videos de Perú 2021 y de la Fundación Perú.</p></header>'
+            f'<section class="band-s" id="medios"><h2>En televisión y medios digitales</h2><div class="vids">{"".join(vid_card(v) for v in V["medios"])}</div>'
+            f'{link_list(X.LINKS_MEDIOS)}</section>'
+            f'<section class="band-s" id="prensa"><h2>En prensa escrita</h2>{link_list(X.PRENSA)}</section>'
+            f'<section class="band-s" id="conferencias"><h2>Conferencias</h2><div class="vids">{"".join(vid_card(v) for v in V["conferencias"])}</div></section>'
+            f'<section class="band-s" id="fundacion"><h2>Fundación Perú</h2><div class="vids">{"".join(vid_card(v) for v in V["fundacion"])}</div></section>'
+            f'<section class="band-s" id="peru-2021"><h2>Perú 2021</h2><div class="vids">{"".join(vid_card(v) for v in V["peru2021"])}</div></section>'
+            '</div>')
+
+def page_archivo():
+    out, ul = [], []
+    for k, t in X.DECLARACION:
+        if k == 'li':
+            ul.append(f'<li>{esc(t)}</li>'); continue
+        if ul:
+            out.append('<ul>' + ''.join(ul) + '</ul>'); ul = []
+        out.append(f'<{k}>{esc(t)}</{k}>')
+    if ul:
+        out.append('<ul>' + ''.join(ul) + '</ul>')
+    facts = ''.join(f'<dt>{esc(k)}</dt><dd>{esc(v)}</dd>' for k, v in X.RESOLUCION)
+    return ('<div class="wrap about"><header class="page-head"><h1>Archivo</h1>'
+            '<p>Documentos que se mantienen publicados por transparencia.</p></header>'
+            f'<section class="body doc" id="declaracion"><h2>Declaración pública sobre el caso Calle Quirós y Manuel F. Sotomayor</h2>{"".join(out)}</section>'
+            f'<section class="body doc" id="resolucion"><h2>Resolución de archivamiento definitivo (caso Santiago Calle)</h2>'
+            f'<p class="lbl">Resumen ejecutivo</p><dl class="facts">{facts}</dl>'
+            f'<p><a class="btn alt-l" href="{X.RESOLUCION_PDF}">Ver la resolución completa (PDF)</a></p></section>'
+            '<div style="height:40px"></div></div>')
+
+def page_fotos():
+    figs = ''.join(f'<figure><a href="{u}=w1600"><img src="{u}=w640" alt="{esc(c)}" loading="lazy"></a>'
+                   f'<figcaption>{esc(c)}</figcaption></figure>' for u, c in X.fotos())
+    return ('<div class="wrap"><header class="page-head"><h1>Fotos</h1>'
+            '<p>Momentos de una trayectoria gremial y empresarial: CONFIEP, APEC, ABAC y encuentros con jefes de Estado.</p></header>'
+            f'<div class="gal">{figs}</div><div style="height:48px"></div></div>')
 
 # ------------------------------------------------------------------ ensamblado
 pages = {
@@ -311,6 +369,9 @@ pages = {
     'temas': ('Temas · Manuel Sotomayor', page_themes()),
     'series': ('Series · Manuel Sotomayor', page_series_index()),
     'sobre-mi': ('Sobre mí · Manuel Sotomayor', page_about()),
+    'entrevistas': ('Entrevistas · Manuel Sotomayor', page_entrevistas()),
+    'archivo': ('Archivo · Manuel Sotomayor', page_archivo()),
+    'fotos': ('Fotos · Manuel Sotomayor', page_fotos()),
 }
 for k in PIL_ORDER:
     pages['tema-' + k] = (f'{PIL[k]["name"]} · Manuel Sotomayor', page_theme(k))
@@ -330,7 +391,7 @@ if MODE == 'spa':
     js = open(f'{ROOT}/site/app.js').read()
     shell = shell.replace('/*CSS*/', css).replace('/*JS*/', js)
     for k, v in {'{{HOME}}': link('inicio'), '{{COLS}}': link('columnas'), '{{TEMAS}}': link('temas'),
-                 '{{SERIES}}': link('series'), '{{SOBRE}}': link('sobre-mi')}.items():
+                 '{{SERIES}}': link('series'), '{{SOBRE}}': link('sobre-mi'), '{{ENTREV}}': link('entrevistas')}.items():
         shell = shell.replace(k, v)
     open(f'{OUT}/index.html', 'w').write(shell)
     print('páginas', len(pages), '| site.json', os.path.getsize(f'{OUT}/site.json') // 1024, 'KB',
@@ -362,7 +423,8 @@ if MODE == 'static':
     for a in ARTS:
         card(f'{OUT}/og/{a["slug"]}.png', a['title'], dates, a['date'], fecha(a['date']))
 
-    NAV = [('columnas', 'Columnas'), ('temas', 'Temas'), ('series', 'Series'), ('sobre-mi', 'Sobre mí')]
+    NAV = [('columnas', 'Columnas'), ('temas', 'Temas'), ('series', 'Series'), ('entrevistas', 'Entrevistas'), ('sobre-mi', 'Sobre mí')]
+    FOOTNAV = NAV + [('fotos', 'Fotos'), ('archivo', 'Archivo')]
     def header(sect):
         links = ''.join(f'<a href="{link(k)}"{" aria-current=\"page\"" if k == sect else ""}>{v}</a>' for k, v in NAV)
         return (f'<header class="top"><div class="wrap"><a class="brand" href="{link("inicio")}">Manuel Sotomayor</a>'
@@ -370,7 +432,7 @@ if MODE == 'static':
     FOOT = ('<footer class="foot"><div class="wrap"><div><b>Manuel Sotomayor de Azambuja</b>Empresario. Ex-Presidente de CONFIEP'
             '<p class="note">© 2026 Manuel Sotomayor de Azambuja. Las columnas se publicaron originalmente en El Reporte.</p></div>'
             '<nav class="nav" aria-label="Pie de página">'
-            + ''.join(f'<a href="{link(k)}">{v}</a>' for k, v in NAV) + '</nav></div></footer>')
+            + ''.join(f'<a href="{link(k)}">{v}</a>' for k, v in FOOTNAV) + '</nav></div></footer>')
 
     def doc(name, title, desc, body, og='inicio', kind='website', extra=''):
         path = path_of(name)
@@ -407,6 +469,9 @@ if MODE == 'static':
         'temas': 'Los cinco temas de «Las Reglas del Juego»: instituciones, economía, ideas, inteligencia artificial e Iglesia.',
         'series': 'Columnas de Manuel Sotomayor que se leen juntas, como capítulos de un libro breve.',
         'sobre-mi': 'Manuel Sotomayor de Azambuja, empresario y economista peruano, ex presidente de CONFIEP.',
+        'entrevistas': 'Entrevistas de Manuel Sotomayor en televisión y prensa, y los videos de Perú 2021 y la Fundación Perú.',
+        'archivo': 'Declaración pública y resolución de archivamiento definitivo del caso Calle Quirós.',
+        'fotos': 'Fotos de Manuel Sotomayor en CONFIEP, APEC, ABAC y con jefes de Estado.',
     }
     urls = []
     ruler_json = json.dumps(ruler, ensure_ascii=False).replace('</', '<\\/')
@@ -433,6 +498,22 @@ if MODE == 'static':
         '<div class="wrap"><header class="page-head" style="border:0"><h1>Esta página no existe</h1>'
         f'<p>Puede que la dirección haya cambiado. <a href="{link("columnas")}">Ver todas las columnas</a>.</p></header></div>')
     shutil.move(f'{OUT}/404tmp/index.html', f'{OUT}/404.html'); os.rmdir(f'{OUT}/404tmp')
+    # direcciones del sitio de Google Sites
+    REDIR = {
+        'manuelsotomayor-com': '/', 'artículos': '/columnas/', 'articulos': '/columnas/',
+        'entrevistas/no-hay-diferencia-entre-el-fascismo-y-el-comunismo': '/entrevistas/#no-hay-diferencia',
+        'perú-2021': '/entrevistas/#peru-2021', 'peru-2021': '/entrevistas/#peru-2021',
+        'declaración-pública': '/archivo/#declaracion', 'declaracion-publica': '/archivo/#declaracion',
+        'resolución-de-archivamiento': '/archivo/#resolucion', 'resolucion-de-archivamiento': '/archivo/#resolucion',
+    }
+    for oldp, newp in REDIR.items():
+        tgt = BASE + newp
+        os.makedirs(f'{OUT}/{oldp}', exist_ok=True)
+        open(f'{OUT}/{oldp}/index.html', 'w').write(
+            '<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Manuel Sotomayor</title>'
+            f'<meta name="robots" content="noindex"><link rel="canonical" href="{BASE_URL}{newp}">'
+            f'<meta http-equiv="refresh" content="0; url={tgt}"><script>location.replace({json.dumps(tgt)})</script>'
+            f'</head><body><p><a href="{tgt}">Continuar</a></p></body></html>')
     # buscador, mapa del sitio y robots
     idx = {}
     for a in ARTS:

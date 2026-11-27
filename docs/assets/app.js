@@ -175,6 +175,18 @@ function initCopy() {
 }
 
 document.addEventListener('click', e => {
+  const v = e.target.closest('a.yt[data-id]');
+  if (v && SITE.mode === 'static') {
+    e.preventDefault();
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + v.dataset.id + '?autoplay=1&rel=0' + (v.dataset.t ? '&start=' + v.dataset.t : '');
+    f.title = v.getAttribute('aria-label') || 'Video';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen = true;
+    v.replaceWith(f);
+  }
+});
+document.addEventListener('click', e => {
   const a = e.target.closest('a[data-jump]');
   if (!a) return;
   const el = document.getElementById(a.dataset.jump);

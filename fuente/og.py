@@ -55,9 +55,9 @@ def background():
         return _BG.copy()
     y, x = np.mgrid[0:H, 0:W].astype(np.float32)
     t = (x / W * 0.55 + y / H * 0.45)[..., None]
-    g1, g2, g3 = (np.array(c, np.float32) for c in ((33, 118, 87), (29, 114, 86), (19, 82, 64)))
+    g1, g2, g3 = (np.array(c, np.float32) for c in ((0, 139, 65), (0, 132, 61), (0, 104, 48)))
     col = np.where(t < 0.5, g1 + (g2 - g1) * (t / 0.5), g2 + (g3 - g2) * ((t - 0.5) / 0.5))
-    hl = np.clip(1 - np.sqrt((x / W - 0.08) ** 2 + 1.6 * (y / H) ** 2) / 0.6, 0, 1)[..., None] * 0.09
+    hl = np.clip(1 - np.sqrt((x / W - 0.08) ** 2 + 1.6 * (y / H) ** 2) / 0.6, 0, 1)[..., None] * 0.05
     col = col + (255 - col) * hl
     sh = np.clip(1 - np.sqrt((x / W - 1) ** 2 + 1.4 * (y / H - 1) ** 2) / 0.7, 0, 1)[..., None] * 0.28
     col = col * (1 - sh)

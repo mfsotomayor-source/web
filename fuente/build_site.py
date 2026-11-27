@@ -301,7 +301,7 @@ def page_about():
             '<p>Escribe «Las Reglas del Juego», la columna que publica El Reporte desde octubre de 2025. Su tesis es '
             'constante: lo que decide el rumbo de un país no son las personas, sino las instituciones. Escribe desde el '
             'liberalismo clásico, con Hayek y Popper como referencias.</p></div>'
-            f'<div class="btns" style="margin:8px 0 56px"><a class="btn solid" style="background:var(--green);color:#fff" '
+            f'<div class="btns" style="margin:8px 0 56px"><a class="btn solid" style="background:var(--fill);color:#fff" '
             f'href="{link("columnas")}">Leer las columnas</a></div></div>')
 
 # ------------------------------------------------------------------ ensamblado
@@ -349,7 +349,7 @@ if MODE == 'static':
     open(f'{OUT}/assets/style.css', 'w').write(css)
     open(f'{OUT}/assets/app.js', 'w').write(open(f'{ROOT}/site/app.js').read())
     open(f'{OUT}/assets/icon.svg', 'w').write(
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#1d7256"/>'
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#00843d"/>'
         '<path d="M12 46h40" stroke="#fff" stroke-width="3"/><path d="M18 46V30M26 46V24M34 46V30M42 46V24" stroke="#fff" '
         'stroke-width="3" stroke-linecap="round"/><path d="M50 46V14" stroke="#f0c766" stroke-width="4" stroke-linecap="round"/>'
         '<circle cx="50" cy="13" r="4" fill="#f0c766"/></svg>')

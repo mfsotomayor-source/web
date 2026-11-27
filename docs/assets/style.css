@@ -5,23 +5,24 @@
    TYPE    Lora (la de sus PDF) para títulos y lectura + Source Sans 3 para rótulos
    LAYOUT  laptop: título y última columna arriba, la regla a todo el ancho debajo; teléfono: título, regla, última columna */
 :root{color-scheme:light dark;
-  --bg:light-dark(#ffffff,#0e1512);
-  --ink:light-dark(#17211d,#e6ece9);
-  --muted:light-dark(#56645e,#a3b4ad);
-  --rule:light-dark(#dfe5e2,#26332e);
-  --green:light-dark(#1d7256,#165c45);
-  --deep:light-dark(#123f31,#0a261d);
-  --link:light-dark(#1d7256,#86cfae);
+  --bg:light-dark(#ffffff,#0b1510);
+  --ink:light-dark(#14201a,#e6efe9);
+  --muted:light-dark(#53645a,#a3b8ac);
+  --rule:light-dark(#dde6e0,#23332a);
+  --green:light-dark(#00843d,#4cc27e);
+  --fill:#00843d;
+  --deep:light-dark(#004225,#00321c);
+  --link:light-dark(#007a38,#6fd39a);
   --gold:#f0c766;
-  --panel:light-dark(#f4f7f5,#141e1a);
-  --g1:light-dark(#217657,#1b6c51);
-  --g2:light-dark(#1d7256,#155a44);
-  --g3:light-dark(#135240,#0d3a2c);
-  --d1:light-dark(#18513f,#10392c);
-  --d2:light-dark(#0f382b,#09251c);
-  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .11 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --cloth:repeating-linear-gradient(0deg,rgb(255 255 255/.035) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgb(0 0 0/.06) 0 1px,transparent 1px 3px);
-  --bookcloth:var(--grain),var(--cloth),radial-gradient(120% 90% at 8% 0%,rgb(255 255 255/.09),transparent 58%),radial-gradient(90% 80% at 100% 100%,rgb(0 0 0/.28),transparent 62%),linear-gradient(158deg,var(--g1),var(--g2) 48%,var(--g3));
+  --panel:light-dark(#f0f7f2,#10201a);
+  --g1:light-dark(#008c41,#007a39);
+  --g2:light-dark(#00843d,#006f34);
+  --g3:light-dark(#006a31,#005a2a);
+  --d1:light-dark(#004d2b,#003d22);
+  --d2:light-dark(#004225,#00321c);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --cloth:repeating-linear-gradient(0deg,rgb(255 255 255/.02) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgb(0 0 0/.06) 0 1px,transparent 1px 3px);
+  --bookcloth:var(--grain),var(--cloth),radial-gradient(90% 80% at 100% 100%,rgb(0 0 0/.28),transparent 62%),linear-gradient(158deg,var(--g1),var(--g2) 48%,var(--g3));
   --deepcloth:var(--grain),var(--cloth),radial-gradient(100% 120% at 0% 0%,rgb(255 255 255/.08),transparent 60%),linear-gradient(160deg,var(--d1),var(--d2));
   --on:#ffffff;
   --serif:"Lora",Georgia,"Times New Roman",serif;
@@ -63,10 +64,10 @@ h2{font-size:var(--t2);line-height:1.15}
 .lede{font:400 var(--t3)/1.55 var(--serif);max-width:34em;margin:16px 0 0;color:var(--on)}
 .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:4px;font:600 16px/1 var(--sans);text-decoration:none;cursor:pointer;border:1px solid transparent}
-.btn.solid{background:var(--on);color:#123f31;box-shadow:0 1px 0 rgb(0 0 0/.15)}
+.btn.solid{background:var(--on);color:#004225;box-shadow:0 1px 0 rgb(0 0 0/.15)}
 .btn.line{border-color:color-mix(in srgb,var(--on) 55%,transparent);color:var(--on)}
 .btn.line:hover{border-color:var(--on)}
-.latest{background:var(--grain),linear-gradient(160deg,rgb(12 45 34/.82),rgb(8 34 26/.9));border:1px solid rgb(255 255 255/.10);border-radius:6px;padding:22px 24px;color:var(--on);box-shadow:0 1px 0 rgb(255 255 255/.06) inset,0 10px 24px -14px rgb(0 0 0/.5)}
+.latest{background:var(--grain),linear-gradient(160deg,rgb(0 77 43/.9),rgb(0 58 32/.94));border:1px solid rgb(255 255 255/.10);border-radius:6px;padding:22px 24px;color:var(--on);box-shadow:0 1px 0 rgb(255 255 255/.06) inset,0 10px 24px -14px rgb(0 0 0/.5)}
 .latest .lbl{color:var(--gold)}
 .latest h2{font-size:clamp(22px,2.4vw,28px);margin:8px 0 10px}
 .latest h2 a{color:var(--on);text-decoration:none}
@@ -94,11 +95,11 @@ h2{font-size:var(--t2);line-height:1.15}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{min-height:44px;padding:8px 14px;border-radius:999px;border:1px solid var(--rule);background:transparent;color:var(--ink);font:600 15px/1 var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
 .chip span{color:var(--muted);font-weight:500}
-.chip[aria-pressed=true]{background:var(--green);border-color:var(--green);color:var(--on)}
+.chip[aria-pressed=true]{background:var(--fill);border-color:var(--fill);color:var(--on)}
 .chip[aria-pressed=true] span{color:color-mix(in srgb,var(--on) 80%,transparent)}
 .hero .chip{border-color:color-mix(in srgb,var(--on) 40%,transparent);color:var(--on)}
 .hero .chip span{color:color-mix(in srgb,var(--on) 75%,transparent)}
-.hero .chip[aria-pressed=true]{background:var(--on);color:#123f31;border-color:var(--on)}
+.hero .chip[aria-pressed=true]{background:var(--on);color:#004225;border-color:var(--on)}
 .hero .chip[aria-pressed=true] span{color:#3c5a4f}
 
 /* secciones de portada */
@@ -144,6 +145,7 @@ h2{font-size:var(--t2);line-height:1.15}
 .theme li:first-child{border-top:0;padding-top:2px}
 
 .wa{background:var(--bookcloth);color:var(--on)}
+.wa .btn.solid{color:#004225}
 .wa .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 40px}
 .wa h2{color:var(--on)}
 .wa p{font:400 var(--t3)/1.5 var(--serif);margin:8px 0 0;color:color-mix(in srgb,var(--on) 85%,transparent);max-width:36em}
@@ -187,7 +189,7 @@ h2{font-size:var(--t2);line-height:1.15}
 .sig b{display:block;font:600 19px/1.35 var(--serif);color:var(--ink)}
 .orig{margin-top:12px;font:400 16px/1.5 var(--sans)}
 .share{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.share .btn{background:var(--green);color:var(--on)}
+.share .btn{background:var(--fill);color:var(--on)}
 .share .btn.alt{background:transparent;color:var(--green);border-color:var(--green)}
 .share .btn svg{width:18px;height:18px;fill:currentColor}
 .box{margin-top:36px;padding:22px 24px;background:var(--panel);border-radius:6px}

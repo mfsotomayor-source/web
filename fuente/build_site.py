@@ -307,6 +307,7 @@ def page_about():
             '<h2>Documentos y enlaces</h2><ul>'
             + ''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for u, t in X.CV)
             + f'<li><a href="{link("entrevistas")}">Entrevistas y videos</a>, incluidos Perú 2021 y la Fundación Perú</li>'
+            + (f'<li><a href="{link("fotos")}">Fotos</a>: CONFIEP, APEC, ABAC y encuentros con jefes de Estado</li>' if MODE == 'static' else '')
             + f'<li><a href="{link("archivo")}">Archivo</a>: declaración pública y resolución de archivamiento</li></ul>'
             '<p>Contacto: <a href="mailto:manuel@sotomayor.com">manuel@sotomayor.com</a></p></div>'
             f'<div class="btns" style="margin:8px 0 56px"><a class="btn solid" style="background:var(--fill);color:#fff" '
@@ -356,8 +357,8 @@ def page_archivo():
             '<div style="height:40px"></div></div>')
 
 def page_fotos():
-    figs = ''.join(f'<figure><a href="{u}=w1600"><img src="{u}=w640" alt="{esc(c)}" loading="lazy"></a>'
-                   f'<figcaption>{esc(c)}</figcaption></figure>' for u, c in X.fotos())
+    figs = ''.join(f'<figure><a href="{BASE}/fotos/foto-{n:02d}.jpg"><img src="{BASE}/fotos/t/foto-{n:02d}.jpg" '
+                   f'alt="{esc(c)}" loading="lazy"></a><figcaption>{esc(c)}</figcaption></figure>' for n, c in X.fotos())
     return ('<div class="wrap"><header class="page-head"><h1>Fotos</h1>'
             '<p>Momentos de una trayectoria gremial y empresarial: CONFIEP, APEC, ABAC y encuentros con jefes de Estado.</p></header>'
             f'<div class="gal">{figs}</div><div style="height:48px"></div></div>')
@@ -372,6 +373,8 @@ pages = {
     'entrevistas': ('Entrevistas · Manuel Sotomayor', page_entrevistas()),
     'archivo': ('Archivo · Manuel Sotomayor', page_archivo()),
 }
+if MODE == 'static':
+    pages['fotos'] = ('Fotos · Manuel Sotomayor', page_fotos())
 for k in PIL_ORDER:
     pages['tema-' + k] = (f'{PIL[k]["name"]} · Manuel Sotomayor', page_theme(k))
 for s in S['series']:
@@ -418,6 +421,7 @@ if MODE == 'static':
         open(f'{OUT}/CNAME', 'w').write('www.manuelsotomayor.com\n')
     if os.path.isdir(f'{ROOT}/site/pdf'):
         shutil.copytree(f'{ROOT}/site/pdf', f'{OUT}/pdf')
+    shutil.copytree(f'{ROOT}/site/fotos', f'{OUT}/fotos')
     dates = [a['date'] for a in ARTS]
     card(f'{OUT}/og/inicio.png', 'Columnas sobre instituciones, libertad y el diseño de las reglas',
          dates, ARTS[0]['date'], 'manuelsotomayor.com')
@@ -501,7 +505,7 @@ if MODE == 'static':
     shutil.move(f'{OUT}/404tmp/index.html', f'{OUT}/404.html'); os.rmdir(f'{OUT}/404tmp')
     # direcciones del sitio de Google Sites
     REDIR = {
-        'manuelsotomayor-com': '/', 'artículos': '/columnas/', 'articulos': '/columnas/', 'fotos': '/sobre-mi/',
+        'manuelsotomayor-com': '/', 'artículos': '/columnas/', 'articulos': '/columnas/',
         'entrevistas/no-hay-diferencia-entre-el-fascismo-y-el-comunismo': '/entrevistas/#no-hay-diferencia',
         'perú-2021': '/entrevistas/#peru-2021', 'peru-2021': '/entrevistas/#peru-2021',
         'declaración-pública': '/archivo/#declaracion', 'declaracion-publica': '/archivo/#declaracion',

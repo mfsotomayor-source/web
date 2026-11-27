@@ -83,9 +83,14 @@ FIX_CAP = {
 FOTO_BASE = 'https://lh7-us.googleusercontent.com/sitesv-images-rt/'
 
 def fotos():
+    """(numero, pie de foto) de las fotos que existen en site/fotos, en el orden del sitio original."""
+    import os
     out = []
-    for fid, cap in json.load(open('/home/claude/data/fotos.json')):
+    for n, cap in json.load(open('/home/claude/data/fotos_orden.json')):
+        if not os.path.exists(f'/home/claude/site/fotos/foto-{n:02d}.jpg'):
+            continue
+        cap = ' '.join(cap.split())
         for a, b in FIX_CAP.items():
             cap = cap.replace(a, b)
-        out.append((FOTO_BASE + fid, cap))
+        out.append((n, cap))
     return out

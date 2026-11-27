@@ -32,7 +32,6 @@ VIDEOS = {
 LINKS_MEDIOS = [
     (DRIVE.format('1pPcUg5AzGpJVUiw79CBPu37i2mzqivK4'), 'Con Milagros Leiva, primera parte', '11 de agosto de 2021'),
     (DRIVE.format('17yz2PjK1wPmO9XBaqlOd3eyHBo_QM2AK'), 'Con Milagros Leiva, segunda parte', '11 de agosto de 2021'),
-    (YT + 'P0foyocN9y4&t=660s', 'Los empresarios con cabeza de avestruz', 'Desde el minuto 11'),
 ]
 PRENSA = [
     (DRIVE.format('1Yd8vBkvP0uCLtPI85mP7aZaIm7ExD-Qe'), 'Hay que desmontar la narrativa de la izquierda', 'Diario Gestión, 2021'),

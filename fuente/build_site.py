@@ -306,7 +306,6 @@ def page_about():
             '<h2>Documentos y enlaces</h2><ul>'
             + ''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for u, t in X.CV)
             + f'<li><a href="{link("entrevistas")}">Entrevistas y videos</a>, incluidos Perú 2021 y la Fundación Perú</li>'
-            + f'<li><a href="{link("fotos")}">Fotos</a></li>'
             + f'<li><a href="{link("archivo")}">Archivo</a>: declaración pública y resolución de archivamiento</li></ul>'
             '<p>Contacto: <a href="mailto:manuel@sotomayor.com">manuel@sotomayor.com</a></p></div>'
             f'<div class="btns" style="margin:8px 0 56px"><a class="btn solid" style="background:var(--fill);color:#fff" '
@@ -371,7 +370,6 @@ pages = {
     'sobre-mi': ('Sobre mí · Manuel Sotomayor', page_about()),
     'entrevistas': ('Entrevistas · Manuel Sotomayor', page_entrevistas()),
     'archivo': ('Archivo · Manuel Sotomayor', page_archivo()),
-    'fotos': ('Fotos · Manuel Sotomayor', page_fotos()),
 }
 for k in PIL_ORDER:
     pages['tema-' + k] = (f'{PIL[k]["name"]} · Manuel Sotomayor', page_theme(k))
@@ -424,7 +422,7 @@ if MODE == 'static':
         card(f'{OUT}/og/{a["slug"]}.png', a['title'], dates, a['date'], fecha(a['date']))
 
     NAV = [('columnas', 'Columnas'), ('temas', 'Temas'), ('series', 'Series'), ('entrevistas', 'Entrevistas'), ('sobre-mi', 'Sobre mí')]
-    FOOTNAV = NAV + [('fotos', 'Fotos'), ('archivo', 'Archivo')]
+    FOOTNAV = NAV + [('archivo', 'Archivo')]
     def header(sect):
         links = ''.join(f'<a href="{link(k)}"{" aria-current=\"page\"" if k == sect else ""}>{v}</a>' for k, v in NAV)
         return (f'<header class="top"><div class="wrap"><a class="brand" href="{link("inicio")}">Manuel Sotomayor</a>'
@@ -500,7 +498,7 @@ if MODE == 'static':
     shutil.move(f'{OUT}/404tmp/index.html', f'{OUT}/404.html'); os.rmdir(f'{OUT}/404tmp')
     # direcciones del sitio de Google Sites
     REDIR = {
-        'manuelsotomayor-com': '/', 'artículos': '/columnas/', 'articulos': '/columnas/',
+        'manuelsotomayor-com': '/', 'artículos': '/columnas/', 'articulos': '/columnas/', 'fotos': '/sobre-mi/',
         'entrevistas/no-hay-diferencia-entre-el-fascismo-y-el-comunismo': '/entrevistas/#no-hay-diferencia',
         'perú-2021': '/entrevistas/#peru-2021', 'peru-2021': '/entrevistas/#peru-2021',
         'declaración-pública': '/archivo/#declaracion', 'declaracion-publica': '/archivo/#declaracion',

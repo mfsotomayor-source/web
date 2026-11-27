@@ -414,6 +414,8 @@ if MODE == 'static':
         'stroke-width="3" stroke-linecap="round"/><path d="M50 46V14" stroke="#f0c766" stroke-width="4" stroke-linecap="round"/>'
         '<circle cx="50" cy="13" r="4" fill="#f0c766"/></svg>')
     open(f'{OUT}/.nojekyll', 'w').write('')
+    if not BASE:
+        open(f'{OUT}/CNAME', 'w').write('www.manuelsotomayor.com\n')
     if os.path.isdir(f'{ROOT}/site/pdf'):
         shutil.copytree(f'{ROOT}/site/pdf', f'{OUT}/pdf')
     dates = [a['date'] for a in ARTS]

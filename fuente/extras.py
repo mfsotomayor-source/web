@@ -8,7 +8,7 @@ DRIVE = 'https://drive.google.com/file/d/{}/view'
 VIDEOS = {
     'medios': [
         ('LSb69rqCQvw', 'No hay diferencia entre un comunista y un fascista', 'El Reporte', None, 'no-hay-diferencia'),
-        ('YAXHewkvh80', 'La amenaza comunista, la libertad y el empresariado', 'El Montonero', None, None),
+        ('YAXHewkvh80', 'La amenaza comunista, la libertad y el empresariado', 'El Montonero, 2021', None, None),
         ('x6dy79_E_FU', 'Cara a Cara', 'TV Perú Noticias. Entrevista al expresidente de la CONFIEP', None, None),
         ('QmxmUCbQ6rE', 'La política en la economía', 'Reflexiones, con Alfonso Baella. 8 de setiembre de 2021, junto a Jaime Reusche', None, None),
         ('PT0gXDNhvIc', 'Las consecuencias del fallo de La Haya', 'Con Luis Icochea', None, None),

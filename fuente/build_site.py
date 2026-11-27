@@ -289,11 +289,13 @@ def page_series(key):
 
 def page_about():
     return ('<div class="wrap about"><header class="page-head" style="border:0"><h1>Manuel Sotomayor de Azambuja</h1>'
-            '<span class="draft">Borrador para tu aprobación</span></header><div class="body">'
+            '</header><div class="body">'
             '<p>Empresario y economista peruano. Presidió la Confederación Nacional de Instituciones Empresariales '
             'Privadas (CONFIEP) entre 1998 y 1999.</p>'
             '<p>En 1992 fundó Perú 2021, hoy Perú Sostenible, una de las primeras iniciativas de responsabilidad social '
-            'empresarial de América Latina. Ha integrado redes empresariales internacionales como el Consejo Consultivo '
+            'empresarial de América Latina. Creó, además, la Fundación Perú: Innovando el Futuro, nacida de una iniciativa '
+            'del expresidente Alan García.</p>'
+            '<p>Ha integrado redes empresariales internacionales como el Consejo Consultivo '
             'Empresarial del APEC (ABAC), el Consejo Empresarial de América Latina (CEAL) y el Grupo de los Cincuenta (G50), '
             'y participa en organizaciones de la sociedad civil como ANCLA.</p>'
             '<p>Escribe «Las Reglas del Juego», la columna que publica El Reporte desde octubre de 2025. Su tesis es '
@@ -352,6 +354,8 @@ if MODE == 'static':
         'stroke-width="3" stroke-linecap="round"/><path d="M50 46V14" stroke="#f0c766" stroke-width="4" stroke-linecap="round"/>'
         '<circle cx="50" cy="13" r="4" fill="#f0c766"/></svg>')
     open(f'{OUT}/.nojekyll', 'w').write('')
+    if os.path.isdir(f'{ROOT}/site/pdf'):
+        shutil.copytree(f'{ROOT}/site/pdf', f'{OUT}/pdf')
     dates = [a['date'] for a in ARTS]
     card(f'{OUT}/og/inicio.png', 'Columnas sobre instituciones, libertad y el diseño de las reglas',
          dates, ARTS[0]['date'], 'manuelsotomayor.com')
